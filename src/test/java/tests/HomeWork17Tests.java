@@ -10,6 +10,7 @@ import java.util.Arrays;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -145,8 +146,7 @@ public class HomeWork17Tests {
                 .post("https://reqres.in/api/users")
                 .then()
                 .statusCode(201)
-                .body("name", is("morpheus"))
-                .body("job", is("leader"));
+                .body("name", is("morpheus"), "job", is("leader"));
     }
 
     @Test
@@ -158,5 +158,12 @@ public class HomeWork17Tests {
                 .statusCode(200);
     }
 
+    @Test
+    void List() {
+        get("https://reqres.in/api/users?page=2")
+                .then()
+                .statusCode(200)
+                .body("data.id", hasItems(7, 8, 9 , 10, 11, 12));
+    }
 
 }
