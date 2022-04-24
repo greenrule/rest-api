@@ -2,11 +2,6 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 
-import io.restassured.response.Response;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
@@ -150,7 +145,7 @@ public class HomeWork17Tests {
     }
 
     @Test
-    void Delete() {
+    void delete() {
         /*
         {}*/
         get("https://reqres.in/api/users/2")
@@ -159,7 +154,7 @@ public class HomeWork17Tests {
     }
 
     @Test
-    void List() {
+    void list() {
         get("https://reqres.in/api/users?page=2")
                 .then()
                 .statusCode(200)
