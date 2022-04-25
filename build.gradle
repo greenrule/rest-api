@@ -6,11 +6,18 @@ repositories {
     mavenCentral()
 }
 
+def restAssured = "4.4.0",
+    junitVersion = "5.8.2",
+    slf4jVersion = "1.7.32"
+
 dependencies {
     testImplementation(
-            "io.rest-assured:rest-assured:5.0.1",
-            "org.junit.jupiter:junit-jupiter:5.8.2",
-            "org.slf4j:slf4j-simple:1.7.36")
+            "io.rest-assured:rest-assured:$restAssured",
+            "org.assertj:assertj-core:3.22.0",
+            "org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly(
+            "org.slf4j:slf4j-simple:$slf4jVersion",
+            "org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }
 
 tasks.withType(JavaCompile) {
@@ -20,16 +27,6 @@ tasks.withType(JavaCompile) {
 tasks.withType(Test) {
     systemProperties(System.getProperties())
     useJUnitPlatform()
-
-    if (System.getProperty("threads") != null) {
-        systemProperties += [
-                'junit.jupiter.execution.parallel.enabled'                 : true,
-                'junit.jupiter.execution.parallel.mode.default'            : 'concurrent',
-                'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
-                'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
-                'junit.jupiter.execution.parallel.config.fixed.parallelism': System.getProperty("threads").toInteger()
-        ]
-    }
 
     testLogging {
         lifecycle {
